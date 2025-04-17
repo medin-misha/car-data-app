@@ -68,12 +68,13 @@ class CarScraper:
                     ).text.split()
                     company: str = company_model_year[0]
                     model: str = "".join([i + " " for i in company_model_year[1:-1]])
-                    production_year: str = company_model_year[-1]
+                    production_year: str = company_model_year[-1].replace(" ", "")
                     price: str = (
                         soap.find("div", class_="price_value")
                         .find("strong")
                         .text.strip()[:-1]
                         .strip()
+                        .replace(" ", "")
                     )
                     mileage: str = (
                         soap.find("dd", class_="mhide")
@@ -99,8 +100,8 @@ class CarScraper:
                     )
                     car_data["company"] = company
                     car_data["model"] = model
-                    car_data["production_year"] = production_year
-                    car_data["price"] = price
+                    car_data["production_year"] = int(production_year)
+                    car_data["price"] = int(price)
                     car_data["mileage"] = mileage
                     car_data["engine"] = engine
                     car_data["location"] = location

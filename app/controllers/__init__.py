@@ -6,9 +6,11 @@ __all__ = (
     "get_car_by_id",
     "delete_car_by_id",
     "update_car_by_id",
+    "autoria_filling",
+    "db_clear",
 )
 
-from .autoria import CarScraper
+from .db_actions import CarScraper
 from .crud import (
     create_car,
     get_cars,
@@ -17,3 +19,4 @@ from .crud import (
     delete_car_by_id,
     update_car_by_id,
 )
+from .db_actions import autoria_filling, db_clear
