@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from pymongo.errors import DuplicateKeyError
 from pydantic import ValidationError
 from typing import List
 from models import Car
@@ -7,7 +8,12 @@ from schemes.car_schemes import CreateCar, ReturnCar
 
 
 async def create_car(data: CreateCar) -> ReturnCar:
-    return await Car(**data.model_dump()).create()
+    try:
+        car = await Car(**data.model_dump()).create()
+        return car
+    except DuplicateKeyError:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Извините, но копия той же записи уже есть в базе данных")
+
 
 
 async def get_cars(page: int) -> List[ReturnCar]:

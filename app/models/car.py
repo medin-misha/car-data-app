@@ -8,10 +8,10 @@ class Car(Document):
     """
 
     company: Indexed(str)
-    model: str
-    production_year: Indexed(int)
+    model: Indexed(str, unique=True)
+    production_year: int
     price: float
-    mileage: str
+    mileage: Indexed(str, unique=True)
     engine: str
     location: str
     photo_url: str
