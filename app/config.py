@@ -7,3 +7,5 @@ class DatabaseSettings(BaseSettings):
 
 class Config(BaseSettings):
     database: DatabaseSettings = DatabaseSettings()
+
+settings = Config()
