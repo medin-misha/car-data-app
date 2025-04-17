@@ -27,8 +27,17 @@ async def get_cars_view(page: int = 1) -> List[ReturnCar]:
     summary="Получение списка Car по компании производителя",
     response_description="Список Car",
 )
-async def get_car_by_company(company: str) -> List[ReturnCar]:
+async def get_car_by_company_view(company: str) -> List[ReturnCar]:
     return await filter_car(filter={"company": company})
+
+
+@router.get(
+    "/year/{year}",
+    summary="Получение списка Car по году выпуска",
+    response_description="Список Car",
+)
+async def get_car_by_production_year_view(year: int) -> List[ReturnCar]:
+    return await filter_car(filter={"production_year": year})
 
 
 @router.get(
