@@ -6,7 +6,7 @@ from views import cars_router
 
 
 @asynccontextmanager
-async def lifespan() -> None:
+async def lifespan(app: FastAPI) -> None:
     await connect()
     yield
 
