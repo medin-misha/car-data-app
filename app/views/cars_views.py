@@ -6,6 +6,7 @@ from controllers import (
     filter_car,
     get_car_by_id,
     delete_car_by_id,
+    update_car_by_id,
 )
 from schemes.car_schemes import CreateCar, ReturnCar
 
@@ -51,6 +52,13 @@ async def get_car_by_production_year_view(year: int) -> List[ReturnCar]:
 )
 async def get_car_by_id_view(id: str) -> ReturnCar | None:
     return await get_car_by_id(id=id)
+
+
+@router.put(
+    "/{id}", summary="Обновлениме car по его id", response_description="Обновлённый Car"
+)
+async def update_car_by_id_view(id: str, car_data: CreateCar):
+    return await update_car_by_id(id=id, data=car_data)
 
 
 @router.delete("/{id}", summary="Удаление Car по его id", status_code=204)
