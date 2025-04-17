@@ -1,11 +1,19 @@
 from fastapi import FastAPI
 import uvicorn
-import asyncio
+from contextlib import asynccontextmanager
 from db_connect import connect
+from views import cars_router
 
-app = FastAPI()
-asyncio.get_event_loop().create_task(connect())
 
+@asynccontextmanager
+async def lifespan() -> None:
+    await connect()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
+
+app.include_router(cars_router)
 
 
 if __name__ == "__main__":
