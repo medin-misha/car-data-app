@@ -1,4 +1,4 @@
-from beanie import Document, Indexed
+from beanie import Document, Indexed, PydanticObjectId
 
 
 class Car(Document):
