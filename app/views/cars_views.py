@@ -23,6 +23,15 @@ async def get_cars_view(page: int = 1) -> List[ReturnCar]:
 
 
 @router.get(
+    "/make/{company}",
+    summary="Получение списка Car по компании производителя",
+    response_description="Список Car",
+)
+async def get_car_by_company(company: str) -> List[ReturnCar]:
+    return await filter_car(filter={"company": company})
+
+
+@router.get(
     "/{id}", summary="Получение Car по его id", response_description="Данные модели Car"
 )
 async def get_car_by_id_view(id: str) -> ReturnCar:
