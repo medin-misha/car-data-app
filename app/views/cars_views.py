@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, status, HTTPException
 from typing import List
-from controllers import create_car, get_cars
+from controllers import create_car, get_cars, filter_car, get_car_by_id
 from schemes.car_schemes import CreateCar, ReturnCar
 
 router = APIRouter(prefix="/cars", tags=["cars"])
@@ -20,3 +20,10 @@ async def create_car_view(car: CreateCar) -> ReturnCar:
 )
 async def get_cars_view(page: int = 1) -> List[ReturnCar]:
     return await get_cars(page=page)
+
+
+@router.get(
+    "/{id}", summary="Получение Car по его id", response_description="Данные модели Car"
+)
+async def get_car_by_id_view(id: str) -> ReturnCar:
+    return await get_car_by_id(id=id)
