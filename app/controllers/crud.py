@@ -22,10 +22,36 @@ async def filter_car(filter: dict) -> List[ReturnCar]:
 
 
 async def get_car_by_id(id: int) -> ReturnCar:
+    car: ReturnCar | None = await Car.get(id)
     try:
-        return await Car.get(id)
-    except ValidationError:
+        if car is not None:
+            return car
+
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Машина по id: {id} не найдена",
+        )
+    except ValidationError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Формат id не правильный",
+        )
+
+
+async def delete_car_by_id(id: str) -> None:
+    try:
+        car: ReturnCar | None = await Car.get(id)
+        print(car)
+        if car is not None:
+            await Car.delete(car)
+            return
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Машина по id: {id} не найдена",
+        )
+
+    except ValidationError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Формат id не правильный",
         )
